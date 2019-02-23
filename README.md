@@ -1,5 +1,8 @@
-libvirt-php
-===========
+# libvirt-php
+## About this forked repository
+Seems like the official libvirt-php isn't being maintenanced by anyone, contributions sent to libvirt-list was ignored, so this repository appeared.
+
+## Origin README content
 
 Bugfix libvirt-php required for KnightSwarm/Squire
 
