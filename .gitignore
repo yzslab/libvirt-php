@@ -39,3 +39,6 @@ tools/generate-api-docs
 libvirt-php-*.tar.gz
 *~
 !/m4/virt-*.m4
+.idea
+CMakeLists.txt
+cmake-build-debug
