@@ -143,6 +143,8 @@ typedef struct _php_libvirt_hash_key_info {
 
 ZEND_BEGIN_MODULE_GLOBALS(libvirt)
     char *last_error;
+    int last_error_code;
+    int last_error_domain;
     char *vnc_location;
     zend_bool longlong_to_string_ini;
     char *iso_path_ini;
@@ -159,6 +161,7 @@ ZEND_DECLARE_MODULE_GLOBALS(libvirt)
 
 /* Private definitions */
 void set_error(char *msg TSRMLS_DC);
+void set_error3(char *msg, int code, int domain TSRMLS_DC);
 void set_error_if_unset(char *msg TSRMLS_DC);
 void reset_error(TSRMLS_D);
 int count_resources(int type TSRMLS_DC);
@@ -195,6 +198,8 @@ PHP_MINFO_FUNCTION(libvirt);
 
 /* Common functions */
 PHP_FUNCTION(libvirt_get_last_error);
+PHP_FUNCTION(libvirt_get_last_error_code);
+PHP_FUNCTION(libvirt_get_last_error_domain);
 PHP_FUNCTION(libvirt_version);
 PHP_FUNCTION(libvirt_check_version);
 PHP_FUNCTION(libvirt_has_feature);
