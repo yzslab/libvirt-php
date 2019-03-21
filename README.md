@@ -28,6 +28,15 @@ enum virDomainUndefineFlagsValues {
     VIR_DOMAIN_UNDEFINE_KEEP_NVRAM	=	8 (0x8; 1 << 3)	
     Keep nvram file Future undefine control flags should come here.
 }
+
+enum virStorageVolDeleteFlags {
+    VIR_STORAGE_VOL_DELETE_NORMAL	=	0 (0x0)	
+    Delete metadata only (fast)
+    VIR_STORAGE_VOL_DELETE_ZEROED	=	1 (0x1; 1 << 0)	
+    Clear all data to zeros (slow)
+    VIR_STORAGE_VOL_DELETE_WITH_SNAPSHOTS	=	2 (0x2; 1 << 1)	
+    Force removal of volume, even if in use
+}
 ```
 
 ## Origin README content
