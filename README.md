@@ -10,6 +10,8 @@ bool libvirt_domain_reset(resource $domain, int $flags = 0)
 
 int libvirt_get_last_error_code()
 int libvirt_get_last_error_domain()
+
+array libvirt_network_get_dhcp_leases(string $mac = null, int $flags = 0)
 ```
 ### Additional constants
 ```
