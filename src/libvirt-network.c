@@ -585,3 +585,71 @@ PHP_FUNCTION(libvirt_list_networks)
     if (!done)
         RETURN_FALSE;
 }
+
+/*
+ * Function name:   libvirt_network_get_dhcp_leases
+ * Since version:   0.5.5
+ * Description:     Function is setting the autostart value for the network
+ * Arguments:       @res [resource]: libvirt network resource
+ *                  @mac [string]: Optional ASCII formatted MAC address of an interface
+ *                  @flags [int]: Extra flags, not used yet, so callers should always pass 0
+ * Returns:         TRUE on success, FALSE on error
+ */
+PHP_FUNCTION(libvirt_network_get_dhcp_leases)
+{
+    php_libvirt_network *network = NULL;
+    zval *znetwork;
+    char *mac = NULL;
+    strsize_t mac_len;
+    zend_long flags = 0;
+
+    virNetworkDHCPLeasePtr *leases = NULL;
+    int nleases = 0;
+
+    int i;
+
+    int done = 0;
+
+    GET_NETWORK_FROM_ARGS("r|sl", &znetwork, &mac, &mac_len, &flags);
+
+    if ((nleases = virNetworkGetDHCPLeases(network->network, mac, &leases, flags)) < 0) {
+        set_error_if_unset("Failed to get leases info" TSRMLS_CC);
+        goto cleanup;
+    }
+
+    array_init(return_value);
+
+    for (i = 0; i < nleases; i++) {
+        virNetworkDHCPLeasePtr lease;
+        lease = leases[i];
+        /*
+        printf("Time(epoch): %lu, MAC address: %s, " "IP address: %s, Hostname: %s, ClientID: %s\n",
+         (unsigned long) lease->expirytime,
+         lease->mac,
+         lease->ipaddr,
+         lease->hostname,
+         lease->clientid)
+         ;
+        */
+        zval *arr;
+        VIRT_ARRAY_INIT(arr);
+        add_assoc_long(arr, "time", (long) lease->expirytime);
+        add_assoc_string(arr, "mac", lease->mac);
+        add_assoc_string(arr, "ipaddr", lease->ipaddr);
+        add_assoc_string(arr, "hostname", lease->hostname);
+        add_assoc_string(arr, "clientid", lease->clientid);
+        add_index_zval(return_value, i, arr);
+    }
+
+    done = 1;
+
+    cleanup:
+    if (leases) {
+        for (i = 0; i < nleases; i++)
+            virNetworkDHCPLeaseFree(leases[i]);
+        VIR_FREE(leases);
+    }
+    if (!done) {
+        RETURN_FALSE
+    }
+}
