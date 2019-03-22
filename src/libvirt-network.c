@@ -634,10 +634,10 @@ PHP_FUNCTION(libvirt_network_get_dhcp_leases)
         zval *arr;
         VIRT_ARRAY_INIT(arr);
         add_assoc_long(arr, "time", (long) lease->expirytime);
-        add_assoc_string(arr, "mac", lease->mac);
-        add_assoc_string(arr, "ipaddr", lease->ipaddr);
-        add_assoc_string(arr, "hostname", lease->hostname);
-        add_assoc_string(arr, "clientid", lease->clientid);
+        VIRT_ADD_ASSOC_STRING_WITH_NULL_POINTER_CHECK(arr, "mac", lease->mac);
+        VIRT_ADD_ASSOC_STRING_WITH_NULL_POINTER_CHECK(arr, "ipaddr", lease->ipaddr);
+        VIRT_ADD_ASSOC_STRING_WITH_NULL_POINTER_CHECK(arr, "hostname", lease->hostname);
+        VIRT_ADD_ASSOC_STRING_WITH_NULL_POINTER_CHECK(arr, "clientid", lease->clientid);
         add_index_zval(return_value, i, arr);
     }
 
