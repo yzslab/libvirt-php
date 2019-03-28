@@ -12,6 +12,7 @@ int libvirt_get_last_error_code()
 int libvirt_get_last_error_domain()
 
 array libvirt_network_get_dhcp_leases(string $mac = null, int $flags = 0)
+array libvirt_domain_get_cpu_total_stats()
 ```
 ### Additional constants
 ```
