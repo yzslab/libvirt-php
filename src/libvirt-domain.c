@@ -1871,11 +1871,11 @@ PHP_FUNCTION(libvirt_domain_block_stats)
 
     array_init(return_value);
     LONGLONG_INIT;
-    LONGLONG_ASSOC(return_value, "rd_req", stats.rd_req);
-    LONGLONG_ASSOC(return_value, "rd_bytes", stats.rd_bytes);
-    LONGLONG_ASSOC(return_value, "wr_req", stats.wr_req);
-    LONGLONG_ASSOC(return_value, "wr_bytes", stats.wr_bytes);
-    LONGLONG_ASSOC(return_value, "errs", stats.errs);
+    SIGNED_LONGLONG_ASSOC(return_value, "rd_req", stats.rd_req);
+    SIGNED_LONGLONG_ASSOC(return_value, "rd_bytes", stats.rd_bytes);
+    SIGNED_LONGLONG_ASSOC(return_value, "wr_req", stats.wr_req);
+    SIGNED_LONGLONG_ASSOC(return_value, "wr_bytes", stats.wr_bytes);
+    SIGNED_LONGLONG_ASSOC(return_value, "errs", stats.errs);
 }
 
 /*
